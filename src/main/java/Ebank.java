@@ -1,5 +1,7 @@
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Ebank {
     public enum Locale {
@@ -8,9 +10,24 @@ public class Ebank {
     }
 
     static ResourceBundle message;
+    private static final Map<String, String> accounts = new HashMap<>();
 
-    public static boolean checkPassword(String password) {
+    static {
+        accounts.put("1234567890", "Password123");
+        accounts.put("0987654321", "Admin12345");
+        accounts.put("1111111111", "Hello1234");
+    }
+
+    public static boolean isConrrectFormat(String password) {
         return password.matches("(?=.*[0-9])(?=.*[A-Za-z]).*");
+    }
+
+    public static boolean isValidPassword(String accountNumber, String password) {
+        return password.equals(accounts.get(accountNumber));
+    }
+
+    public static boolean isInDatabase(String accountNumber) {
+        return accounts.containsKey(accountNumber);
     }
 
     public static boolean checkAccountNumber(String accountNumber) {
